@@ -1,6 +1,6 @@
 <?php
 
-	include('class.path.php');
+	include('Path.php');
 
 	$api = new path_wrapper();
 
