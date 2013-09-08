@@ -30,8 +30,11 @@ class path_wrapper{
 	public $places;
 	public $sleep;
 	public $users;
-	
-	
+
+	public function __construct() {
+		$this->user = new stdClass();
+	}
+
     /**
     * @function        public        	login          # Set authorization hash and check connection 
     * 
