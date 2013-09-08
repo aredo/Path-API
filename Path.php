@@ -137,6 +137,31 @@ class path_wrapper{
 
 
     /**
+    * @function        public        	getHome		   			# Get home feed
+    * 
+    * @return          array				   		    	#  Array of personnal activity
+    * 
+    **/		
+	
+	public function getUserPath( $user_id, $time = null ){
+
+		if ( is_null( $time ) )		
+			$time = microtime() - 43200000;
+
+		$url  = $this->api_url."moment/feed?newer_than=".$time."&user_id=".$user_id;
+		
+		$data = $this->httpRequest($url);
+
+		if($data == false){
+			throw new Exception("Bad guy, bad data!");
+			
+		}
+		
+		return json_decode($data);
+	}
+
+
+    /**
     * @function        public        	getFriends   			# Get friends list
     * 
     * @return          array				   		#  Array of friends
@@ -245,6 +270,8 @@ class path_wrapper{
 				      'Authorization: Basic '.$this->authorization,
 		 		      'Accept-Charset: utf-8');
 				
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_PROXY, '127.0.0.1:8888');
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $http_headers);
